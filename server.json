@@ -1,0 +1,22 @@
+{
+  "name": "lomus-server",
+  "version": "1.0.0",
+  "description": "Backend for Lomus social network",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "pg": "^8.11.0",
+    "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "dotenv": "^16.0.3",
+    "express-validator": "^6.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
