@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lomus - شبکه اجتماعی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1DA1F2;
+            --primary-dark: #0d8bda;
+            --secondary: #657786;
+            --background: #f5f8fa;
+            --white: #ffffff;
+            --border: #e1e8ed;
+            --text: #14171a;
+            --text-light: #657786;
+            --success: #17bf63;
+            --danger: #e0245e;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* نوار بالایی */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 32px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 22px;
+        }
+
+        .nav-text {
+            font-size: 12px;
+        }
+
+        /* محتوای اصلی */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr 350px;
+            gap: 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* سایدبار چپ */
+        .sidebar-left {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .profile-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #794bc4);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-username {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* محتوای میانی */
+        .main-content {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .create-post {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post-input {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .post-textarea {
+            flex: 1;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 18px;
+            min-height: 60px;
+            padding: 10px 0;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-left: 65px;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .action-icon {
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .post-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .post-button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* پست‌ها */
+        .post {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .post:hover {
+            background: #fafafa;
+        }
+
+        .post-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .post-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #794bc4);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .post-username {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .post-time {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .post-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .post-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .post-stat:hover {
+            color: var(--primary);
+        }
+
+        .post-stat.liked {
+            color: var(--danger);
+        }
+
+        /* سایدبار راست */
+        .sidebar-right {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .trending-card, .who-to-follow {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .trending-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-category {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .trending-topic {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .trending-count {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .user-to-follow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-to-follow:last-child {
+            border-bottom: none;
+        }
+
+        .follow-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .follow-info {
+            flex: 1;
+        }
+
+        .follow-name {
+            font-weight: 600;
+        }
+
+        .follow-username {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .follow-button {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .follow-button:hover {
+            background: rgba(29, 161, 242, 0.1);
+        }
+
+        .follow-button.following {
+            background: var(--text);
+            border-color: var(--text);
+            color: white;
+        }
+
+        /* فوتر */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* نسخه موبایل */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .sidebar-left, .sidebar-right {
+                display: none;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+                justify-content: space-around;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--border);
+                padding: 10px 0;
+                z-index: 1000;
+            }
+            
+            .mobile-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: var(--text-light);
+                text-decoration: none;
+            }
+            
+            .mobile-nav-item.active {
+                color: var(--primary);
+            }
+            
+            .main-content {
+                margin-bottom: 70px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-dove"></i>
+                Lomus
+            </a>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">خانه</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-search"></i>
+                    <span class="nav-text">جستجو</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span class="nav-text">اعلان‌ها</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-envelope"></i>
+                    <span class="nav-text">پیام‌ها</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-text">پروفایل</span>
+                </a>
+                <button class="post-button">توییت</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <div class="container">
+        <!-- سایدبار چپ -->
+        <aside class="sidebar-left">
+            <div class="profile-card">
+                <div class="profile-avatar">ش</div>
+                <div class="profile-name">شما</div>
+                <div class="profile-username">@you</div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">۱۲</div>
+                        <div class="stat-label">دنبال‌کننده</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">۲۴</div>
+                        <div class="stat-label">دنبال‌شده</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">۴۷</div>
+                        <div class="stat-label">توییت</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trending-card">
+                <h3 class="card-title">ترندهای ایران</h3>
+                <div class="trending-item">
+                    <div class="trending-category">ترند در ایران</div>
+                    <div class="trending-topic">#لوموس</div>
+                    <div class="trending-count">۱٫۲ هزار توییت</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-category">ترند در ایران</div>
+                    <div class="trending-topic">#شبکه_اجتماعی</div>
+                    <div class="trending-count">۳٫۴ هزار توییت</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-category">ترند در ایران</div>
+                    <div class="trending-topic">#توسعه_وب</div>
+                    <div class="trending-count">۲٫۱ هزار توییت</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- محتوای میانی -->
+        <main class="main-content">
+            <!-- باکس ایجاد توییت -->
+            <div class="create-post">
+                <div class="post-input">
+                    <div class="post-avatar">ش</div>
+                    <textarea class="post-textarea" placeholder="چه خبر؟" id="newPost"></textarea>
+                </div>
+                <div class="post-actions">
+                    <div class="action-icons">
+                        <i class="fas fa-image action-icon"></i>
+                        <i class="fas fa-poll action-icon"></i>
+                        <i class="far fa-smile action-icon"></i>
+                        <i class="far fa-calendar-alt action-icon"></i>
+                    </div>
+                    <button class="post-button" onclick="createPost()">توییت</button>
+                </div>
+            </div>
+
+            <!-- پست‌ها -->
+            <div id="postsContainer">
+                <!-- پست‌ها با JavaScript اضافه می‌شوند -->
+            </div>
+        </main>
+
+        <!-- سایدبار راست -->
+        <aside class="sidebar-right">
+            <div class="who-to-follow">
+                <h3 class="card-title">پیشنهاد برای دنبال کردن</h3>
+                <div class="user-to-follow">
+                    <div class="follow-avatar">ع</div>
+                    <div class="follow-info">
+                        <div class="follow-name">علی محمدی</div>
+                        <div class="follow-username">@alimohammadi</div>
+                    </div>
+                    <button class="follow-button" onclick="toggleFollow(this)">دنبال کردن</button>
+                </div>
+                <div class="user-to-follow">
+                    <div class="follow-avatar">س</div>
+                    <div class="follow-info">
+                        <div class="follow-name">سارا کریمی</div>
+                        <div class="follow-username">@sarak</div>
+                    </div>
+                    <button class="follow-button" onclick="toggleFollow(this)">دنبال کردن</button>
+                </div>
+                <div class="user-to-follow">
+                    <div class="follow-avatar">ر</div>
+                    <div class="follow-info">
+                        <div class="follow-name">رضا احمدی</div>
+                        <div class="follow-username">@reza_dev</div>
+                    </div>
+                    <button class="follow-button" onclick="toggleFollow(this)">دنبال کردن</button>
+                </div>
+            </div>
+            
+            <div class="trending-card">
+                <h3 class="card-title">اخبار داغ</h3>
+                <div class="trending-item">
+                    <div class="trending-topic">لانچ Lomus</div>
+                    <div class="trending-count">شبکه اجتماعی جدید ایرانی</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-topic">برنامه نویسی فرانت‌اند</div>
+                    <div class="trending-count">تکنولوژی‌های جدید</div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-topic">Vercel چیست؟</div>
+                    <div class="trending-count">راهنمای استقرار آسان</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- منوی موبایل -->
+    <nav class="mobile-nav">
+        <a href="#" class="mobile-nav-item active">
+            <i class="fas fa-home"></i>
+            <span style="font-size: 12px;">خانه</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="fas fa-search"></i>
+            <span style="font-size: 12px;">جستجو</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="fas fa-bell"></i>
+            <span style="font-size: 12px;">اعلان‌ها</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="fas fa-envelope"></i>
+            <span style="font-size: 12px;">پیام‌ها</span>
+        </a>
+    </nav>
+
+    <!-- فوتر -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">درباره</a>
+                <a href="#" class="footer-link">مرکز کمک</a>
+                <a href="#" class="footer-link">حریم خصوصی</a>
+                <a href="#" class="footer-link">قوانین</a>
+                <a href="#" class="footer-link">تنظیمات</a>
+            </div>
+            <div class="copyright">
+                © ۲۰۲۳ Lomus. همه حقوق محفوظ است.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // داده‌های اولیه
+        let posts = [
+            {
+                id: 1,
+                author: "علی محمدی",
+                username: "@alimohammadi",
+                avatar: "ع",
+                content: "اولین توییت در Lomus! 🎉 خیلی هیجان‌زده‌ام که این پروژه شروع شد.",
+                time: "۲ ساعت پیش",
+                likes: 15,
+                retweets: 3,
+                comments: 2,
+                liked: false
+            },
+            {
+                id: 2,
+                author: "سارا کریمی",
+                username: "@sarak",
+                avatar: "س",
+                content: "امروز دارم روی یک پروژه جدید کار می‌کنم. خیلی جذابه! #برنامه_نویسی #فرانت‌اند",
+                time: "۴ ساعت پیش",
+                likes: 28,
+                retweets: 7,
+                comments: 5,
+                liked: true
+            },
+            {
+                id: 3,
+                author: "رضا احمدی",
+                username: "@reza_dev",
+                avatar: "ر",
+                content: "لوموس رو دوست دارم! یه شبکه اجتماعی تمیز و ساده. طراحی‌ش عالیه. 👏",
+                time: "۶ ساعت پیش",
+                likes: 42,
+                retweets: 12,
+                comments: 8,
+                liked: false
+            }
+        ];
+
+        // نمایش پست‌ها
+        function renderPosts() {
+            const container = document.getElementById('postsContainer');
+            container.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar-small">${post.avatar}</div>
+                        <div class="post-info">
+                            <div>
+                                <span class="post-author">${post.author}</span>
+                                <span class="post-username">${post.username}</span>
+                            </div>
+                            <div class="post-time">${post.time}</div>
+                        </div>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    <div class="post-stats">
+                        <div class="post-stat" onclick="toggleComment(${post.id})">
+                            <i class="far fa-comment"></i>
+                            <span>${post.comments}</span>
+                        </div>
+                        <div class="post-stat" onclick="retweetPost(${post.id})">
+                            <i class="fas fa-retweet"></i>
+                            <span>${post.retweets}</span>
+                        </div>
+                        <div class="post-stat ${post.liked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
+                            <i class="${post.liked ? 'fas' : 'far'} fa-heart"></i>
+                            <span>${post.likes}</span>
+                        </div>
+                        <div class="post-stat">
+                            <i class="far fa-share-square"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(postElement);
+            });
+        }
+
+        // ایجاد پست جدید
+        function createPost() {
+            const textarea = document.getElementById('newPost');
+            const content = textarea.value.trim();
+            
+            if (!content) {
+                alert('لطفا متنی برای توییت وارد کنید!');
+                return;
+            }
+            
+            const newPost = {
+                id: posts.length + 1,
+                author: "شما",
+                username: "@you",
+                avatar: "ش",
+                content: content,
+                time: "همین الان",
+                likes: 0,
+                retweets: 0,
+                comments: 0,
+                liked: false
+            };
+            
+            posts.unshift(newPost); // اضافه کردن به ابتدای لیست
+            renderPosts();
+            textarea.value = '';
+            
+            // نمایش پیام موفقیت
+            showNotification('توییت شما ارسال شد!');
+        }
+
+        // لایک کردن پست
+        function toggleLike(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.liked = !post.liked;
+                post.likes += post.liked ? 1 : -1;
+                renderPosts();
+            }
+        }
+
+        // ریتوییت کردن
+        function retweetPost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.retweets++;
+                renderPosts();
+                showNotification('توییت ریتوییت شد!');
+            }
+        }
+
+        // کامنت (نمایش پیام)
+        function toggleComment(postId) {
+            const content = prompt('کامنت خود را وارد کنید:');
+            if (content) {
+                const post = posts.find(p => p.id === postId);
+                if (post) {
+                    post.comments++;
+                    renderPosts();
+                    showNotification('کامنت شما ارسال شد!');
+                }
+            }
+        }
+
+        // دنبال کردن کاربر
+        function toggleFollow(button) {
+            if (button.textContent === 'دنبال کردن') {
+                button.textContent = 'دنبال می‌کنید';
+                button.classList.add('following');
+                showNotification('کاربر دنبال شد!');
+            } else {
+                button.textContent = 'دنبال کردن';
+                button.classList.remove('following');
+                showNotification('دنبال‌کردن کاربر لغو شد!');
+            }
+        }
+
+        // نمایش اعلان
+        function showNotification(message) {
+            // ایجاد عنصر اعلان
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--primary);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                font-weight: 500;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // حذف خودکار بعد از 3 ثانیه
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // افزودن استایل انیمیشن
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .post-textarea:focus {
+                outline: none;
+            }
+            
+            .trending-item:hover, .user-to-follow:hover {
+                background-color: #f7f7f7;
+                border-radius: 8px;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // بارگذاری اولیه پست‌ها
+        document.addEventListener('DOMContentLoaded', renderPosts);
+        
+        // قابلیت ارسال با کلید Enter (همراه با Ctrl)
+        document.getElementById('newPost').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                createPost();
+            }
+        });
+    </script>
+</body>
+</html>
