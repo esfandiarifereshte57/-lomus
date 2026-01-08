@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="fa" dir="rtl" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lomus - شبکه اجتماعی نسل جدید</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    :root {
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1a1a2e;
+      --accent-primary: #6366f1;
+      --accent-secondary: #8b5cf6;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--bg-primary) 0%, #16213e 100%);
+      color: var(--text-primary);
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    
+    .glass-effect {
+      background: rgba(26, 26, 46, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .input-field {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      padding: 14px 18px;
+      border-radius: 12px;
+      width: 100%;
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+    
+    .input-field::placeholder {
+      color: var(--text-secondary);
+    }
+    
+    .post-card {
+      background: rgba(26, 26, 46, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      animation: fadeSlideIn 0.5s ease;
+    }
+    
+    .post-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .notification-badge {
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+    
+    .hashtag {
+      color: var(--accent-primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .hashtag:hover {
+      color: var(--accent-secondary);
+      text-decoration: underline;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      z-index: 1000;
+      animation: slideInRight 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    .toast-success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    
+    .toast-error {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+    
+    .loading-spinner {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid var(--accent-primary);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+    }
+    
+    .action-btn.liked {
+      color: #ef4444;
+    }
+    
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      flex-shrink: 0;
+    }
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .scroll-container {
+      max-height: calc(100% - 200px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: var(--accent-primary);
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-secondary);
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full"></div>
+  <script>
+    // 🔥 متصل به Google Apps Script - دیتابیس واقعی Google Sheets
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymxEdYj_92VxoHSh5cO9gy7Fwc-T8b8KJYODg8QVk0Wwy7as6KHpudoGrtYquQjCh6aQ/exec';
+    
+    const defaultConfig = {
+      bg_primary: '#0f0f23',
+      bg_secondary: '#1a1a2e',
+      accent_primary: '#6366f1',
+      accent_secondary: '#8b5cf6',
+      text_primary: '#e2e8f0',
+      text_secondary: '#94a3b8',
+      app_title: 'Lomus',
+      tagline: 'شبکه اجتماعی نسل جدید',
+      login_title: 'ورود به Lomus',
+      register_title: 'عضویت در Lomus',
+      post_placeholder: 'چه خبر؟ چیزی بنویس...',
+      font_family: 'Vazirmatn',
+      font_size: 16
+    };
+
+    let currentUser = null;
+    let currentView = 'login';
+    let posts = [];
+    let notifications = [];
+    let likedPosts = new Set();
+    let isLoading = false;
+    let replyModalPost = null;
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function formatDate(date) {
+      const d = new Date(date);
+      const now = new Date();
+      const diff = Math.floor((now - d) / 1000);
+      
+      if (diff < 60) return 'همین الان';
+      if (diff < 3600) return `${Math.floor(diff / 60)} دقیقه پیش`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)} ساعت پیش`;
+      return `${Math.floor(diff / 86400)} روز پیش`;
+    }
+
+    function extractHashtags(text) {
+      if (!text) return '';
+      return text.replace(/(#[\u0600-\u06FFa-zA-Z0-9_]+)/g, '<span class="hashtag">$1</span>');
+    }
+
+    function getInitials(username) {
+      if (!username) return '??';
+      return String(username).substring(0, 2).toUpperCase();
+    }
+
+    // اتصال به Google Apps Script
+    function callBackend(functionName, ...args) {
+      console.log(`📡 فراخوانی ${functionName} با پارامترها:`, args);
+      
+      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
+        console.error('❌ لطفاً لینک Google Apps Script را در کد وارد کنید!');
+        showToast('لینک Google Apps Script تنظیم نشده است!', 'error');
+        return Promise.reject('لطفاً GOOGLE_SCRIPT_URL را در کد تنظیم کنید');
+      }
+
+      const url = `${GOOGLE_SCRIPT_URL}?function=${encodeURIComponent(functionName)}&args=${encodeURIComponent(JSON.stringify(args))}&t=${Date.now()}`;
+      
+      return fetch(url, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(`✅ ${functionName} موفق:`, data);
+        return data;
+      })
+      .catch(error => {
+        console.error(`❌ خطا در ${functionName}:`, error);
+        throw error;
+      });
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      if (isLoading) return;
+
+      const username = document.getElementById('reg-username').value.trim();
+      const password = document.getElementById('reg-password').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const bio = document.getElementById('reg-bio').value.trim();
+
+      if (!username || !password || !email) {
+        showToast('لطفاً همه فیلدهای ضروری را پر کنید', 'error');
+        return;
+      }
+
+      const btn = document.querySelector('#register-form button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'در حال ثبت‌نام... <span class="loading-spinner"></span>';
+      isLoading = true;
+
+      try {
+        const result = await callBackend('registerUser', username, password, email, bio || '');
+        console.log('نتیجه ثبت‌نام:', result);
+        
+        if (result && result !== 'Username exists!') {
+          showToast('ثبت‌نام موفقیت‌آمیز! اکنون وارد شوید', 'success');
+          currentView = 'login';
+          render();
+        } else {
+          showToast('این نام کاربری قبلاً استفاده شده است', 'error');
+        }
+      } catch (err) {
+        console.error('خطا در ثبت‌نام:', err);
+        showToast('خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.', 'error');
+      } finally {
+        isLoading = false;
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      if (isLoading) return;
+
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+
+      if (!username || !password) {
+        showToast('نام کاربری و رمز عبور الزامی است', 'error');
+        return;
+      }
+
+      const btn = document.querySelector('#login-form button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'در حال ورود... <span class="loading-spinner"></span>';
+      isLoading = true;
+
+      try {
+        const result = await callBackend('loginUser', username, password);
+        console.log('نتیجه ورود:', result);
+        
+        if (result && result.success) {
+          currentUser = { 
+            userID: result.userID, 
+            username: result.username || username 
+          };
+          currentView = 'timeline';
+          showToast(`خوش آمدید ${currentUser.username}!`, 'success');
+          
+          await Promise.all([loadTimeline(), loadNotifications()]);
+          render();
+        } else {
+          showToast('نام کاربری یا رمز عبور اشتباه است', 'error');
+        }
+      } catch (err) {
+        console.error('خطا در ورود:', err);
+        showToast('خطا در ورود. لطفاً دوباره تلاش کنید.', 'error');
+      } finally {
+        isLoading = false;
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+
+    async function handlePost(e) {
+      e.preventDefault();
+      if (isLoading) return;
+
+      const text = document.getElementById('post-text').value.trim();
+      const imageURL = document.getElementById('post-image').value.trim();
+
+      if (!text) {
+        showToast('متن پست الزامی است', 'error');
+        return;
+      }
+
+      const btn = document.querySelector('#post-form button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'در حال انتشار... <span class="loading-spinner"></span>';
+      isLoading = true;
+
+      try {
+        await callBackend('savePost', currentUser.userID, text, imageURL || '');
+        showToast('پست شما منتشر شد!', 'success');
+        document.getElementById('post-text').value = '';
+        document.getElementById('post-image').value = '';
+        
+        await loadTimeline();
+        render();
+      } catch (err) {
+        console.error('خطا در ارسال پست:', err);
+        showToast('خطا در ارسال پست', 'error');
+      } finally {
+        isLoading = false;
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+
+    async function loadTimeline() {
+      if (!currentUser) return;
+      
+      try {
+        console.log('بارگذاری تایم‌لاین برای کاربر:', currentUser.userID);
+        const result = await callBackend('getTimeline', currentUser.userID);
+        
+        if (Array.isArray(result)) {
+          posts = result;
+          console.log(`✅ ${posts.length} پست بارگذاری شد`);
+        } else {
+          console.warn('نتیجه تایم‌لاین آرایه نیست:', result);
+          posts = [];
+        }
+      } catch (err) {
+        console.error('خطا در بارگذاری تایم‌لاین:', err);
+        posts = [];
+      }
+    }
+
+    async function loadNotifications() {
+      if (!currentUser) return;
+      
+      try {
+        const result = await callBackend('getNotifications', currentUser.userID);
+        
+        if (Array.isArray(result)) {
+          notifications = result;
+          console.log(`✅ ${notifications.length} اعلان بارگذاری شد`);
+        } else {
+          notifications = [];
+        }
+      } catch (err) {
+        console.error('خطا در بارگذاری اعلان‌ها:', err);
+        notifications = [];
+      }
+    }
+
+    async function handleLike(postID) {
+      if (isLoading) return;
+      isLoading = true;
+
+      try {
+        if (likedPosts.has(postID)) {
+          await callBackend('dislikePost', currentUser.userID, postID);
+          likedPosts.delete(postID);
+          showToast('لایک حذف شد', 'success');
+        } else {
+          await callBackend('likePost', currentUser.userID, postID);
+          likedPosts.add(postID);
+          showToast('پست لایک شد!', 'success');
+        }
+        
+        await loadTimeline();
+        render();
+      } catch (err) {
+        console.error('خطا در لایک:', err);
+        showToast('خطا در عملیات', 'error');
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    async function handleRetweet(postID) {
+      if (isLoading) return;
+      isLoading = true;
+
+      try {
+        await callBackend('retweetPost', currentUser.userID, postID);
+        showToast('ریتوییت شد!', 'success');
+        
+        await loadTimeline();
+        render();
+      } catch (err) {
+        console.error('خطا در ریتوییت:', err);
+        showToast('خطا در ریتوییت', 'error');
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    function showReplyModal(postID) {
+      replyModalPost = postID;
+      render();
+    }
+
+    function closeReplyModal() {
+      replyModalPost = null;
+      render();
+    }
+
+    async function handleReplySubmit(e) {
+      e.preventDefault();
+      if (isLoading) return;
+
+      const text = document.getElementById('reply-text').value.trim();
+      if (!text) {
+        showToast('متن ریپلای الزامی است', 'error');
+        return;
+      }
+
+      isLoading = true;
+
+      try {
+        await callBackend('replyToPost', currentUser.userID, replyModalPost, text);
+        showToast('ریپلای شما ثبت شد!', 'success');
+        closeReplyModal();
+        
+        await loadTimeline();
+        render();
+      } catch (err) {
+        console.error('خطا در ریپلای:', err);
+        showToast('خطا در ارسال ریپلای', 'error');
+      } finally {
+        isLoading = false;
+      }
+    }
+
+    async function handleSearch(e) {
+      e.preventDefault();
+      const query = document.getElementById('search-input').value.trim();
+      if (!query) {
+        await loadTimeline();
+        render();
+        return;
+      }
+
+      try {
+        const result = await callBackend('searchPosts', query);
+        
+        if (Array.isArray(result)) {
+          posts = result;
+          showToast(`${posts.length} نتیجه یافت شد`, 'success');
+        } else {
+          posts = [];
+          showToast('نتیجه‌ای یافت نشد', 'error');
+        }
+        
+        render();
+      } catch (err) {
+        console.error('خطا در جستجو:', err);
+        showToast('خطا در جستجو', 'error');
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      currentView = 'login';
+      posts = [];
+      notifications = [];
+      likedPosts.clear();
+      showToast('با موفقیت خارج شدید', 'success');
+      render();
+    }
+
+    function renderReplyModal() {
+      if (!replyModalPost) return '';
+      
+      const config = window.elementSdk?.config || defaultConfig;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      return `
+        <div class="modal-overlay" onclick="if(event.target === this) closeReplyModal()">
+          <div class="modal-content" style="font-family: '${customFont}', Vazirmatn, sans-serif;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <h3 style="font-size: ${baseSize * 1.5}px; font-weight: 700; margin: 0;">💬 ریپلای به پست</h3>
+              <button onclick="closeReplyModal()" class="btn-secondary" style="padding: 8px 16px;">✕</button>
+            </div>
+            
+            <form id="reply-form" onsubmit="handleReplySubmit(event)">
+              <textarea id="reply-text" class="input-field" placeholder="پاسخ خود را بنویسید..." rows="4" style="font-size: ${baseSize}px; resize: vertical;" required></textarea>
+              <div style="display: flex; gap: 12px; margin-top: 16px;">
+                <button type="submit" class="btn-primary" style="flex: 1; font-size: ${baseSize}px;">ارسال ریپلای</button>
+                <button type="button" onclick="closeReplyModal()" class="btn-secondary" style="font-size: ${baseSize}px;">انصراف</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLoginPage() {
+      const config = window.elementSdk?.config || defaultConfig;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      return `
+        <div style="height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px; font-family: '${customFont}', Vazirmatn, sans-serif;">
+          <div class="glass-effect" style="max-width: 450px; width: 100%; padding: 48px 40px; border-radius: 24px;">
+            <div class="logo-container" style="justify-content: center;">
+              <img src="https://uploadkon.ir/uploads/614d07_26IMG-5074.jpeg" alt="Lomus Logo" class="logo-img">
+              <div>
+                <h1 class="gradient-text" style="font-size: ${baseSize * 2}px; font-weight: 900; margin: 0;">${config.app_title || defaultConfig.app_title}</h1>
+                <p style="color: var(--text-secondary); margin: 4px 0 0 0; font-size: ${baseSize * 0.9}px;">${config.tagline || defaultConfig.tagline}</p>
+              </div>
+            </div>
+            
+            <div style="margin-top: 32px;">
+              <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                <button onclick="currentView='login'; render();" class="btn-secondary" style="flex: 1; ${currentView === 'login' ? 'background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white;' : ''} font-size: ${baseSize}px;">
+                  ورود
+                </button>
+                <button onclick="currentView='register'; render();" class="btn-secondary" style="flex: 1; ${currentView === 'register' ? 'background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white;' : ''} font-size: ${baseSize}px;">
+                  ثبت‌نام
+                </button>
+              </div>
+
+              ${currentView === 'login' ? `
+                <form id="login-form" onsubmit="handleLogin(event)">
+                  <h2 style="font-size: ${baseSize * 1.5}px; margin-bottom: 24px; font-weight: 700;">${config.login_title || defaultConfig.login_title}</h2>
+                  <div style="margin-bottom: 16px;">
+                    <label for="login-username" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">نام کاربری</label>
+                    <input type="text" id="login-username" class="input-field" placeholder="username" required style="font-size: ${baseSize}px;">
+                  </div>
+                  <div style="margin-bottom: 24px;">
+                    <label for="login-password" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">رمز عبور</label>
+                    <input type="password" id="login-password" class="input-field" placeholder="••••••••" required style="font-size: ${baseSize}px;">
+                  </div>
+                  <button type="submit" class="btn-primary" style="width: 100%; font-size: ${baseSize}px;">ورود به حساب</button>
+                </form>
+              ` : `
+                <form id="register-form" onsubmit="handleRegister(event)">
+                  <h2 style="font-size: ${baseSize * 1.5}px; margin-bottom: 24px; font-weight: 700;">${config.register_title || defaultConfig.register_title}</h2>
+                  <div style="margin-bottom: 16px;">
+                    <label for="reg-username" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">نام کاربر��</label>
+                    <input type="text" id="reg-username" class="input-field" placeholder="username" required style="font-size: ${baseSize}px;">
+                  </div>
+                  <div style="margin-bottom: 16px;">
+                    <label for="reg-email" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">ایمیل</label>
+                    <input type="email" id="reg-email" class="input-field" placeholder="email@example.com" required style="font-size: ${baseSize}px;">
+                  </div>
+                  <div style="margin-bottom: 16px;">
+                    <label for="reg-password" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">رمز عبور</label>
+                    <input type="password" id="reg-password" class="input-field" placeholder="••••••••" required style="font-size: ${baseSize}px;">
+                  </div>
+                  <div style="margin-bottom: 24px;">
+                    <label for="reg-bio" style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: ${baseSize * 0.9}px;">بیوگرافی (اختیاری)</label>
+                    <textarea id="reg-bio" class="input-field" placeholder="درباره خودتان بنویسید..." rows="3" style="font-size: ${baseSize}px; resize: vertical;"></textarea>
+                  </div>
+                  <button type="submit" class="btn-primary" style="width: 100%; font-size: ${baseSize}px;">ایجاد حساب کاربری</button>
+                </form>
+              `}
+            </div>
+
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+              <p style="color: var(--text-secondary); font-size: ${baseSize * 0.85}px;">ساخته شده توسط <span class="gradient-text" style="font-weight: 700;">تیم آکیو</span></p>
+              <a href="https://aciocode.vercel.app" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: none; font-size: ${baseSize * 0.85}px; font-weight: 600;">aciocode.vercel.app</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTimelinePage() {
+      const config = window.elementSdk?.config || defaultConfig;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      const unreadCount = notifications.filter(n => n[6] === false).length;
+      
+      return `
+        <div style="height: 100%; overflow-y: auto; font-family: '${customFont}', Vazirmatn, sans-serif;">
+          <!-- Header -->
+          <header class="glass-effect" style="padding: 16px 24px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+              <div class="logo-container" style="margin: 0;">
+                <img src="https://uploadkon.ir/uploads/614d07_26IMG-5074.jpeg" alt="Lomus" class="logo-img" style="width: 40px; height: 40px;">
+                <h1 class="gradient-text" style="font-size: ${baseSize * 1.5}px; font-weight: 900; margin: 0;">${config.app_title || defaultConfig.app_title}</h1>
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <form onsubmit="handleSearch(event)" style="position: relative;">
+                  <input type="text" id="search-input" class="input-field" placeholder="جستجو..." style="width: 200px; padding: 10px 16px; font-size: ${baseSize * 0.9}px;">
+                </form>
+                
+                <div style="position: relative;">
+                  <button onclick="currentView='notifications'; render();" class="action-btn" style="font-size: ${baseSize}px;">
+                    🔔 اعلان‌ها
+                    ${unreadCount > 0 ? `<span class="notification-badge">${unreadCount}</span>` : ''}
+                  </button>
+                </div>
+                
+                <div class="profile-avatar" style="font-size: ${baseSize}px;">
+                  ${getInitials(currentUser.username)}
+                </div>
+                
+                <button onclick="logout()" class="btn-secondary" style="font-size: ${baseSize * 0.9}px;">خروج</button>
+              </div>
+            </div>
+          </header>
+
+          <main style="max-width: 800px; margin: 0 auto; padding: 24px;">
+            <!-- Create Post -->
+            <div class="glass-effect" style="padding: 24px; border-radius: 16px; margin-bottom: 24px;">
+              <form id="post-form" onsubmit="handlePost(event)">
+                <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                  <div class="profile-avatar" style="font-size: ${baseSize}px;">
+                    ${getInitials(currentUser.username)}
+                  </div>
+                  <div style="flex: 1;">
+                    <textarea id="post-text" class="input-field" placeholder="${config.post_placeholder || defaultConfig.post_placeholder}" rows="3" style="resize: vertical; font-size: ${baseSize}px;" required></textarea>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                  <input type="url" id="post-image" class="input-field" placeholder="لینک تصویر (اختیاری)" style="flex: 1; min-width: 200px; font-size: ${baseSize * 0.9}px;">
+                  <button type="submit" class="btn-primary" style="font-size: ${baseSize}px;">🚀 انتشار</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Timeline -->
+            <div>
+              ${posts.length === 0 ? `
+                <div style="text-align: center; padding: 48px; color: var(--text-secondary);">
+                  <p style="font-size: ${baseSize * 1.2}px; margin-bottom: 8px;">📭 هیچ پستی وجود ندارد</p>
+                  <p style="font-size: ${baseSize * 0.9}px;">اولین پست را شما بنویسید!</p>
+                </div>
+              ` : posts.map(post => {
+                const postID = post[0];
+                const userID = post[1];
+                const text = post[2] || '';
+                const date = post[3];
+                const likes = post[4] || 0;
+                const retweets = post[5] || 0;
+                const replies = post[6] || 0;
+                const imageURL = post[7] || '';
+                const views = post[9] || 0;
+                
+                const isLiked = likedPosts.has(postID);
+                
+                return `
+                  <div class="post-card">
+                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                      <div class="profile-avatar" style="font-size: ${baseSize * 0.9}px;">
+                        ${getInitials('@user' + userID)}
+                      </div>
+                      <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                          <span style="font-weight: 700; font-size: ${baseSize}px;">@user${userID}</span>
+                          <span style="color: var(--text-secondary); font-size: ${baseSize * 0.85}px;">• ${formatDate(date)}</span>
+                        </div>
+                        <p style="font-size: ${baseSize}px; line-height: 1.6; margin: 0; color: var(--text-primary);">
+                          ${extractHashtags(text)}
+                        </p>
+                      </div>
+                    </div>
+
+                    ${imageURL ? `
+                      <div style="margin: 16px 0; border-radius: 12px; overflow: hidden;">
+                        <img src="${imageURL}" alt="تصویر پست" style="width: 100%; max-height: 400px; object-fit: cover;" onerror="this.style.display='none';">
+                      </div>
+                    ` : ''}
+
+                    <div style="display: flex; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                      <button onclick="handleLike('${postID}')" class="action-btn ${isLiked ? 'liked' : ''}" style="font-size: ${baseSize * 0.9}px;">
+                        ${isLiked ? '❤️' : '🤍'} ${likes}
+                      </button>
+                      <button onclick="handleRetweet('${postID}')" class="action-btn" style="font-size: ${baseSize * 0.9}px;">
+                        🔁 ${retweets}
+                      </button>
+                      <button onclick="showReplyModal('${postID}')" class="action-btn" style="font-size: ${baseSize * 0.9}px;">
+                        💬 ${replies}
+                      </button>
+                      <span class="action-btn" style="cursor: default; font-size: ${baseSize * 0.9}px;">
+                        👁️ ${views}
+                      </span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </main>
+          
+          ${renderReplyModal()}
+        </div>
+      `;
+    }
+
+    function renderNotificationsPage() {
+      const config = window.elementSdk?.config || defaultConfig;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      return `
+        <div style="height: 100%; overflow-y: auto; font-family: '${customFont}', Vazirmatn, sans-serif;">
+          <header class="glass-effect" style="padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 16px;">
+              <button onclick="currentView='timeline'; render();" class="btn-secondary" style="font-size: ${baseSize * 0.9}px;">← بازگشت</button>
+              <h2 style="font-size: ${baseSize * 1.5}px; font-weight: 700; margin: 0;">🔔 اعلان‌ها</h2>
+            </div>
+          </header>
+
+          <main style="max-width: 800px; margin: 0 auto; padding: 24px;">
+            ${notifications.length === 0 ? `
+              <div style="text-align: center; padding: 48px; color: var(--text-secondary);">
+                <p style="font-size: ${baseSize * 1.2}px;">📭 اعلانی وجود ندارد</p>
+              </div>
+            ` : [...notifications].reverse().map(notif => {
+              const typeEmoji = {
+                'like': '❤️',
+                'follow': '👤',
+                'reply': '💬',
+                'retweet': '🔁'
+              };
+              const typeText = {
+                'like': 'پست شما را لایک کرد',
+                'follow': 'شما را ��الو کرد',
+                'reply': 'به پست شما ریپلای داد',
+                'retweet': 'پست شما را ریتوییت کرد'
+              };
+              
+              const isUnread = notif[6] === false;
+              
+              return `
+                <div class="post-card" style="${isUnread ? 'border-right: 3px solid var(--accent-primary);' : ''}">
+                  <div style="display: flex; gap: 12px; align-items: center;">
+                    <span style="font-size: ${baseSize * 1.5}px;">${typeEmoji[notif[2]] || '🔔'}</span>
+                    <div style="flex: 1;">
+                      <p style="font-size: ${baseSize}px; margin: 0; color: var(--text-primary);">
+                        <strong>@user${notif[3]}</strong> ${typeText[notif[2]] || 'تعامل جدید'}
+                      </p>
+                      <span style="color: var(--text-secondary); font-size: ${baseSize * 0.85}px;">${formatDate(notif[5])}</span>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </main>
+        </div>
+      `;
+    }
+
+    function render() {
+      const app = document.getElementById('app');
+      
+      if (!currentUser) {
+        app.innerHTML = renderLoginPage();
+      } else if (currentView === 'timeline') {
+        app.innerHTML = renderTimelinePage();
+      } else if (currentView === 'notifications') {
+        app.innerHTML = renderNotificationsPage();
+      }
+    }
+
+    async function onConfigChange(config) {
+      document.documentElement.style.setProperty('--bg-primary', config.bg_primary || defaultConfig.bg_primary);
+      document.documentElement.style.setProperty('--bg-secondary', config.bg_secondary || defaultConfig.bg_secondary);
+      document.documentElement.style.setProperty('--accent-primary', config.accent_primary || defaultConfig.accent_primary);
+      document.documentElement.style.setProperty('--accent-secondary', config.accent_secondary || defaultConfig.accent_secondary);
+      document.documentElement.style.setProperty('--text-primary', config.text_primary || defaultConfig.text_primary);
+      document.documentElement.style.setProperty('--text-secondary', config.text_secondary || defaultConfig.text_secondary);
+      
+      render();
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.bg_primary || defaultConfig.bg_primary,
+              set: (value) => {
+                config.bg_primary = value;
+                window.elementSdk.setConfig({ bg_primary: value });
+              }
+            },
+            {
+              get: () => config.bg_secondary || defaultConfig.bg_secondary,
+              set: (value) => {
+                config.bg_secondary = value;
+                window.elementSdk.setConfig({ bg_secondary: value });
+              }
+            },
+            {
+              get: () => config.accent_primary || defaultConfig.accent_primary,
+              set: (value) => {
+                config.accent_primary = value;
+                window.elementSdk.setConfig({ accent_primary: value });
+              }
+            },
+            {
+              get: () => config.text_primary || defaultConfig.text_primary,
+              set: (value) => {
+                config.text_primary = value;
+                window.elementSdk.setConfig({ text_primary: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['app_title', config.app_title || defaultConfig.app_title],
+          ['tagline', config.tagline || defaultConfig.tagline],
+          ['login_title', config.login_title || defaultConfig.login_title],
+          ['register_title', config.register_title || defaultConfig.register_title],
+          ['post_placeholder', config.post_placeholder || defaultConfig.post_placeholder]
+        ])
+      });
+    }
+
+    // رندر اولیه
+    render();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9baa9f0243e33649',t:'MTc2Nzg2NDA0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
